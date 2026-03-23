@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tila-Tala — Mga istoryang nakahibla sa bawat daloy ng oras</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===================== LOADING SCREEN ===================== -->
+  <div id="loader">
+    <div class="loader-clock">
+      <div class="clock-face">
+        <div class="hand hour-hand" id="loaderHour"></div>
+        <div class="hand minute-hand" id="loaderMin"></div>
+        <div class="clock-center"></div>
+      </div>
+    </div>
+    <p class="loader-text">TILA-TALA</p>
+    <p class="loader-sub">Mga istoryang nakahibla sa bawat daloy ng oras</p>
+  </div>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <span class="logo-province">TILA-TALA</span>
+      </div>
+      <nav class="main-nav" id="main-nav">
+        <a href="#hero" class="nav-link">
+          <span class="nav-icon">🏠</span><span>Home</span>
+        </a>
+        <a href="#konsepto" class="nav-link">
+          <span class="nav-icon">📖</span><span>Tila-Tala: Mga Nilalaman</span>
+        </a>
+        <a href="#larawan-musika" class="nav-link">
+          <span class="nav-icon">🎵</span><span>Tila-Tala: Mga Larawan at Musika</span>
+        </a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="hero-sky" id="hero-sky"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Mga istoryang nakahibla sa bawat daloy ng oras</p>
+      <h1 class="hero-title">
+        <span class="hero-title-main">TILA-TALA</span>
+      </h1>
+      <p class="hero-desc">
+        Tilaok ng Tala &mdash; Pinagsama ang dalawang magkaibang sandali ng oras. Ang tilaok, na karaniwang inuugnay sa umaga, ay sumisimbulo ng paggising, pagsisimula, panibagong paglalakbay. Samantala, ang tala, na mas nakikita sa gabi, ay kumakatawan sa gabay, pagninilay, at tahimik na pag-alala. Pinapakita ng Tila-Tala ang kabuuang siklo ng paglalakbay, mula sa paggising ng umaga hanggang sa katahimikan ng gabi, na sumasalamin sa pagtuklas sa kultura, kasaysayan, at karanasan ng Bulacan.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#konsepto" class="btn btn-primary">Tila-Tala: Mga Nilalaman</a>
+        <a href="#larawan-musika" class="btn btn-ghost">Tila-Tala: Mga Larawan at Musika</a>
+      </div>
+    </div>
+
+    <!-- Live clock — retained as requested -->
+    <div class="hero-clock-wrapper">
+      <div class="hero-clock" id="hero-clock">
+        <div class="hero-clock-face">
+          <div class="tick" style="--i:0"></div><div class="tick" style="--i:1"></div>
+          <div class="tick" style="--i:2"></div><div class="tick" style="--i:3"></div>
+          <div class="tick" style="--i:4"></div><div class="tick" style="--i:5"></div>
+          <div class="tick" style="--i:6"></div><div class="tick" style="--i:7"></div>
+          <div class="tick" style="--i:8"></div><div class="tick" style="--i:9"></div>
+          <div class="tick" style="--i:10"></div><div class="tick" style="--i:11"></div>
+          <div class="hand h-hour" id="clockHour"></div>
+          <div class="hand h-min"  id="clockMin"></div>
+          <div class="hand h-sec"  id="clockSec"></div>
+          <div class="clock-dot"></div>
+        </div>
+        <div class="live-time" id="liveTime"></div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Mag-scroll para magsimula</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===================== TIME RIBBON ===================== -->
+  <div class="time-ribbon">
+    <div class="ribbon-track">
+      <span>5:00 AM</span><span>6:00 AM</span><span>7:00 AM</span>
+      <span>8:00 AM</span><span>9:00 AM</span><span>10:00 AM</span>
+      <span>11:00 AM</span><span>12:00 PM</span><span>1:00 PM</span>
+      <span>2:00 PM</span><span>3:00 PM</span><span>4:00 PM</span>
+      <span>5:00 PM</span><span>6:00 PM</span><span>7:00 PM</span>
+      <span>8:00 PM</span><span>9:00 PM</span><span>10:00 PM</span>
+      <span>5:00 AM</span><span>6:00 AM</span><span>7:00 AM</span>
+      <span>8:00 AM</span><span>9:00 AM</span><span>10:00 AM</span>
+      <span>11:00 AM</span><span>12:00 PM</span><span>1:00 PM</span>
+      <span>2:00 PM</span><span>3:00 PM</span><span>4:00 PM</span>
+      <span>5:00 PM</span><span>6:00 PM</span><span>7:00 PM</span>
+      <span>8:00 PM</span><span>9:00 PM</span><span>10:00 PM</span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       SECTION: KONSEPTO  (was Dawn/History)
+       Changes from doc:
+         ✅ No time badge
+         ✅ Removed eyebrow + intro text
+         ✅ "History of Bulacan" → "Konsepto"
+         ✅ Art box → feature-art.png (image9)
+         ✅ Removed "The Cradle" heading
+         ✅ New Filipino body text
+         ✅ Cards: no icons, new titles + poem content
+         ✅ Collapsible timeline removed
+         ✅ Section linked from nav as "Tila-Tala: Mga Nilalaman"
+       ===================================================================== -->
+  <section id="konsepto" class="time-section dawn-section">
+    <div class="section-sky dawn-sky"></div>
+    <div class="container">
+
+      <div class="section-header section-header--slim">
+        <h2 class="section-title">Konsepto</h2>
+      </div>
+
+      <!-- Feature card with replaced image -->
+      <div class="feature-card feature-card--dawn">
+        <div class="feature-card__image-wrap">
+          <img src="feature-art.png" alt="Konsepto ng Tila-Tala" class="feature-img" />
+        </div>
+        <div class="feature-card__body">
+          <p>Ang bawat pahina ay nagiging bahagi ng isang siklo ng oras na sumasalamin sa pagtuklas, karanasan, at pagpapahalaga sa mga simbahan, pook pangkasaysayan, pasyalan, at lokal na pagkain ng lalawigan. Mula umaga hanggang gabi at pabalik sa bagong umaga.</p>
+        </div>
+      </div>
+
+      <!-- 4 cards — no icons, new titles + Filipino poem texts -->
+      <div class="cards-grid">
+
+        <div class="info-card" data-reveal>
+          <h4>LAKBAY PANANAMPALATAYA</h4>
+          <p>
+            Para sa mga pananampalatayang hinubog ng panahon<br>
+            Sandalan ano man ang maging hamon<br>
+            Bitbit ang mga salita ng Panginoon<br>
+            Sabay-sabay tayong babangon<br><br>
+            Susuungin ang bawat hamon<br>
+            Lumipas man ang panahon<br>
+            Mamayani ang salitang &ldquo;Puhon&rdquo;<br>
+            At kailanman ay hindi susuko sa pagbangon
+          </p>
+        </div>
+
+        <div class="info-card" data-reveal>
+          <h4>LAKBAY KASAYSAYAN</h4>
+          <p>
+            Para sa pagkakakilanlan na hinubog ng kasaysayan<br>
+            Kung saan ang bawat pangyayari ay sadyang makabuluhan<br>
+            Ang mga aral ng nakaraan ay patuloy na pinanghahawakan<br>
+            Upang ang diwa ng pagmamahal sa bayan ay patuloy na mapagyaman<br><br>
+            Sa ating pag-usad sa kasalukuyan<br>
+            Bitbit ang mga aral mula sa nakaraan<br>
+            Ito ang ating magiging sandigan<br>
+            Upang pag-asa sa hinaharap ay ating makamtan
+          </p>
+        </div>
+
+        <div class="info-card" data-reveal>
+          <h4>LAKBAY PANLASA</h4>
+          <p>
+            Para sa mga pagkaing hindi lamang laman ng sikmura<br>
+            Kundi alaala ng bayan na sa bawat kagat ay sumisigla<br>
+            Ang bawat lasa ay mayroong pamana<br>
+            Nagsisilbing patunay na ang pagkain ay malaking bahagi ng ating kultura<br><br>
+            Sa bawat halimuyak na dala ng bawat sangkap<br>
+            Walang humpay ang saya ng bawat pamilya sa hapag<br>
+            Bawat timpla ay simbolo ng sining at pangarap<br>
+            Na sa bawat tikim, ay patuloy na dumadaloy at sumisiklab
+          </p>
+        </div>
+
+        <div class="info-card" data-reveal>
+          <h4>LAKBAY TURISMO</h4>
+          <p>
+            Para sa kasalukyang hinubog ng nakaraan<br>
+            Bawat pook ay may bitbit na kwento at kasaysayan ng bayan<br>
+            Mga simbahan na saksi sa naging daloy ng panahon<br>
+            Sa bawat paglalakbay, aral ng nakaraaan ay muling nahahagkan<br><br>
+            Sa bawat tapak sa makasaysayang kalsada<br>
+            Kwento ng bayan ay natutunghayan ng madla<br>
+            Mga pook ay nagliliwanag sa mga alaala<br>
+            Sa bawat sulyap, kasaysayan ay sumisiklab sa puso ng madla
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CTA linking to Mga Nilalaman -->
+      <div class="section-link-cta">
+        <a href="#larawan-musika" class="btn btn-dawn-link">Tila-Tala: Mga Larawan at Musika &darr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SECTION: MGA LARAWAN AT MUSIKA  (was Afternoon/Tourist Spots)
+       Morning and Evening sections fully removed.
+       Changes from doc:
+         ✅ No time badge
+         ✅ Removed eyebrow + intro paragraph
+         ✅ "Tourist Spots" → "Tila-Tala: Mga Larawan at Musika"
+         ✅ Spot hero 1: "Barasoain Church" → "Tila-Tala: Mga Anino't Banaag"
+             - Removed "UNESCO Tentative List" tag
+             - Removed spot meta
+             - Visual: anino-banaag.jpeg (image13)
+             - Text replaced with poem
+             - Button → https://heyzine.com/flip-book/50fba1de5f.html
+         ✅ Added Spotify Playlist card (filler photo)
+         ✅ Added Soft Copy ng Magazine card (filler photo)
+         ✅ Removed old spots grid and travel tips collapsible
+       ===================================================================== -->
+  <section id="larawan-musika" class="time-section afternoon-section">
+    <div class="section-sky afternoon-sky"></div>
+    <div class="container">
+
+      <div class="section-header section-header--slim">
+        <h2 class="section-title">Tila-Tala: Mga Larawan at Musika</h2>
+      </div>
+
+      <!-- Card 1: Mga Anino't Banaag (flip-book) -->
+      <div class="media-card" data-reveal>
+        <div class="media-card__visual">
+          <img src="anino-banaag.jpeg" alt="Tila-Tala: Mga Anino't Banaag" class="media-photo" />
+        </div>
+        <div class="media-card__body">
+          <h3>Tila-Tala: Mga Anino't Banaag</h3>
+          <p class="media-poem">
+            Ang mga larawan ng Tila-Tala<br>
+            Ay may kanya-kanyang storyang dala<br>
+            Kung saan ang nakaraan ang bida<br>
+            At ang kasalukuyan ang siyang hinulma
+          </p>
+          <a href="https://heyzine.com/flip-book/50fba1de5f.html"
+             target="_blank" rel="noopener"
+             class="btn btn-primary">
+            Buksan ang Flip-Book &#8599;
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Spotify Playlist (filler) -->
+      <div class="media-card media-card--reversed" data-reveal>
+        <div class="media-card__visual media-card__visual--filler filler-spotify">
+          <div class="filler-inner">
+            <span class="filler-icon">🎵</span>
+            <span class="filler-label">Spotify Playlist</span>
+            <span class="filler-note">Larawan — coming soon</span>
+          </div>
+        </div>
+        <div class="media-card__body">
+          <h3>Tila-Tala: Mga Playlist</h3>
+          <p class="media-poem">
+            Para sa mga kwentong nais iparating ng mga ritmo<br>
+            Kung saan bawat liriko ay isang simbolismo<br>
+            Ng mga kwentong dala ng bawat minuto<br>
+            Na sa ating pagkatao ay bumubuo
+          </p>
+          <a href="#" class="btn btn-primary btn-coming-soon" aria-disabled="true">
+            Pakinggan sa Spotify &mdash; Coming Soon
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Soft Copy ng Magazine (filler) -->
+      <div class="media-card" data-reveal>
+        <div class="media-card__visual media-card__visual--filler filler-magazine">
+          <div class="filler-inner">
+            <span class="filler-icon">📖</span>
+            <span class="filler-label">Soft Copy</span>
+            <span class="filler-note">Cover Page — coming soon</span>
+          </div>
+        </div>
+        <div class="media-card__body">
+          <h3>Tila-Tala: Soft Copy ng Magazine</h3>
+          <p class="media-poem">
+            Sa bawat dampi ng mga daliri<br>
+            May mga istoryang nagtitimpi<br>
+            Sa mundong teknolohiya ang siyang nagwawagi<br>
+            Ang mga pahina ay kusang nahahawi
+          </p>
+          <a href="#" class="btn btn-primary btn-coming-soon" aria-disabled="true">
+            I-download ang Magazine &mdash; Coming Soon
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== NIGHT CLOSING ===================== -->
+  <section id="night" class="night-section">
+    <div class="night-stars" id="nightStars"></div>
+    <div class="container">
+      <div class="night-content">
+        <div class="night-moon">🌕</div>
+        <h2 class="night-title">Hanggang sa Susunod na Tila-Tala</h2>
+        <p class="night-text">Habang sumasakay ang gabi sa mga kalye ng Bulacan at nagtatampok ang mga bituin sa kalangitan, ang Tila-Tala ay nananatili &mdash; isang saksi sa bawat tilaok ng umaga at bawat ningning ng tala sa gabi.</p>
+        <div class="night-divider"></div>
+        <div class="night-credits">
+          <p><em>&ldquo;Ang hindi marunong lumingon sa pinanggalingan ay hindi makararating sa paroroonan.&rdquo;</em></p>
+          <p class="credit-attr">&mdash; José Rizal</p>
+        </div>
+        <a href="#hero" class="btn btn-ghost-light">&uarr; Bumalik sa Itaas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">TILA-TALA</span>
+        <p>Mga istoryang nakahibla sa bawat daloy ng oras. Isang digital na magazine tungkol sa lalawigan ng Bulacan.</p>
+      </div>
+      <div class="footer-nav">
+        <h5>Mag-Navigate</h5>
+        <a href="#hero">🏠 Home</a>
+        <a href="#konsepto">📖 Tila-Tala: Mga Nilalaman</a>
+        <a href="#larawan-musika">🎵 Tila-Tala: Mga Larawan at Musika</a>
+      </div>
+      <div class="footer-info">
+        <h5>Tungkol</h5>
+        <p>Isang digital na tributo sa Lalawigan ng Bulacan — <em>Lalawigang Bulakan</em> — sa gitna ng Gitnang Luzon, Pilipinas.</p>
+        <p class="footer-credit">Lahat ng nilalaman ay para sa layuning pang-edukasyon at pangkultura.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Tila-Tala &middot; Mga istoryang nakahibla sa bawat daloy ng oras</span>
+      <div class="footer-time" id="footerTime"></div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
