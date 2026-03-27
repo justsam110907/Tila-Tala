@@ -21,6 +21,7 @@
     </div>
     <p class="loader-text">TILA-TALA</p>
     <p class="loader-sub">Mga istoryang nakahibla sa bawat daloy ng oras</p>
+    <div class="loader-bar"></div>
   </div>
 
   <!-- ===================== HEADER / NAV ===================== -->
@@ -64,21 +65,10 @@
       </div>
     </div>
 
-    <!-- Live clock — retained as requested -->
+    <!-- Live clock — retained as requested, ticks drawn by JS for precision -->
     <div class="hero-clock-wrapper">
       <div class="hero-clock" id="hero-clock">
-        <div class="hero-clock-face">
-          <div class="tick" style="--i:0"></div><div class="tick" style="--i:1"></div>
-          <div class="tick" style="--i:2"></div><div class="tick" style="--i:3"></div>
-          <div class="tick" style="--i:4"></div><div class="tick" style="--i:5"></div>
-          <div class="tick" style="--i:6"></div><div class="tick" style="--i:7"></div>
-          <div class="tick" style="--i:8"></div><div class="tick" style="--i:9"></div>
-          <div class="tick" style="--i:10"></div><div class="tick" style="--i:11"></div>
-          <div class="hand h-hour" id="clockHour"></div>
-          <div class="hand h-min"  id="clockMin"></div>
-          <div class="hand h-sec"  id="clockSec"></div>
-          <div class="clock-dot"></div>
-        </div>
+        <canvas id="clockCanvas" width="260" height="260"></canvas>
         <div class="live-time" id="liveTime"></div>
       </div>
     </div>
@@ -237,7 +227,7 @@
         <div class="media-card__visual">
           <img src="anino-banaag.jpeg" alt="Tila-Tala: Mga Anino't Banaag" class="media-photo" />
         </div>
-        <div class="media-card__body">
+        <div class="media-card__body" data-num="01">
           <h3>Tila-Tala: Mga Anino't Banaag</h3>
           <p class="media-poem">
             Ang mga larawan ng Tila-Tala<br>
@@ -262,7 +252,7 @@
             <span class="filler-note">Larawan — coming soon</span>
           </div>
         </div>
-        <div class="media-card__body">
+        <div class="media-card__body" data-num="02">
           <h3>Tila-Tala: Mga Playlist</h3>
           <p class="media-poem">
             Para sa mga kwentong nais iparating ng mga ritmo<br>
@@ -280,14 +270,10 @@
 
       <!-- Card 3: Soft Copy ng Magazine (filler) -->
       <div class="media-card" data-reveal>
-        <div class="media-card__visual media-card__visual--filler filler-magazine">
-          <div class="filler-inner">
-            <span class="filler-icon">📖</span>
-            <span class="filler-label">Soft Copy</span>
-            <span class="filler-note">Cover Page — coming soon</span>
-          </div>
+        <div class="media-card__visual">
+          <img src="magazine-cover.png" alt="Tila-Tala Magazine Cover" class="media-photo" />
         </div>
-        <div class="media-card__body">
+        <div class="media-card__body" data-num="03">
           <h3>Tila-Tala: Soft Copy ng Magazine</h3>
           <p class="media-poem">
             Sa bawat dampi ng mga daliri<br>
@@ -295,8 +281,10 @@
             Sa mundong teknolohiya ang siyang nagwawagi<br>
             Ang mga pahina ay kusang nahahawi
           </p>
-          <a href="#" class="btn btn-primary btn-coming-soon" aria-disabled="true">
-            I-download ang Magazine &mdash; Coming Soon
+          <a href="https://heyzine.com/flip-book/1427dac875.html#page/1"
+             target="_blank" rel="noopener"
+             class="btn btn-primary">
+            Basahin ang Magazine &#8599;
           </a>
         </div>
       </div>
