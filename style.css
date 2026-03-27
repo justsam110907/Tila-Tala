@@ -344,9 +344,8 @@ body::before {
 .hero-title-main {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 9vw, 9rem);
+  font-size: clamp(4.5rem, 11vw, 9rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 0.88;
-  white-space: nowrap;
   background: linear-gradient(160deg, #ffffff 0%, var(--gold-pale) 40%, var(--gold-light) 70%, #ffffff 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
