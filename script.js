@@ -10,6 +10,7 @@
   const loader = document.getElementById('loader');
   if (!loader) return;
 
+  // Animate loader clock hands
   function setLoaderClock() {
     const now  = new Date();
     const h    = now.getHours() % 12;
@@ -17,7 +18,6 @@
     const s    = now.getSeconds();
     const hourDeg = h * 30 + m * 0.5;
     const minDeg  = m * 6  + s * 0.1;
-
     const hourHand = document.getElementById('loaderHour');
     const minHand  = document.getElementById('loaderMin');
     if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
@@ -25,45 +25,204 @@
   }
 
   setLoaderClock();
-
-  window.addEventListener('load', () => {
-    setTimeout(() => loader.classList.add('hidden'), 1000);
-  });
-
-  // Fallback
+  window.addEventListener('load', () => setTimeout(() => loader.classList.add('hidden'), 1000));
   setTimeout(() => loader.classList.add('hidden'), 2500);
 })();
 
 
-/* ======================== LIVE CLOCK ======================== */
-(function initLiveClock() {
-  const hourHand    = document.getElementById('clockHour');
-  const minHand     = document.getElementById('clockMin');
-  const secHand     = document.getElementById('clockSec');
-  const liveTimeEl  = document.getElementById('liveTime');
-  const footerTimeEl = document.getElementById('footerTime');
+/* ======================== CANVAS CLOCK ======================== */
+(function initCanvasClock() {
+  const canvas = document.getElementById('clockCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-  function updateClock() {
-    const now = new Date();
-    const h = now.getHours() % 12;
-    const m = now.getMinutes();
-    const s = now.getSeconds();
+  // Scale for retina displays
+  const DPR = window.devicePixelRatio || 1;
+  const SIZE = 260;
+  canvas.width  = SIZE * DPR;
+  canvas.height = SIZE * DPR;
+  canvas.style.width  = SIZE + 'px';
+  canvas.style.height = SIZE + 'px';
+  ctx.scale(DPR, DPR);
 
-    if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${h * 30 + m * 0.5}deg)`;
-    if (minHand)  minHand.style.transform  = `translateX(-50%) rotate(${m * 6 + s * 0.1}deg)`;
-    if (secHand)  secHand.style.transform  = `translateX(-50%) rotate(${s * 6}deg)`;
+  const cx = SIZE / 2;
+  const cy = SIZE / 2;
+  const R  = SIZE / 2 - 4; // outer radius
 
-    const hh = now.getHours().toString().padStart(2, '0');
-    const mm = m.toString().padStart(2, '0');
-    const ss = s.toString().padStart(2, '0');
+  // Colour palette matching the magazine cover
+  const COL = {
+    face:       '#0b0f1e',          // deep navy
+    faceInner:  '#0e1428',
+    rim:        'rgba(201,151,90,0.35)',
+    rimGlow:    'rgba(201,151,90,0.08)',
+    tickMajor:  'rgba(201,151,90,0.85)',  // gold major ticks
+    tickMinor:  'rgba(255,255,255,0.18)',
+    handHour:   '#ffffff',
+    handMin:    'rgba(255,255,255,0.88)',
+    handSec:    '#c9975a',          // gold second hand
+    center:     '#c9975a',
+    glow:       'rgba(201,151,90,0.5)',
+  };
+
+  function drawClock() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    // --- Outer glow ring ---
+    const glowGrad = ctx.createRadialGradient(cx, cy, R - 10, cx, cy, R + 18);
+    glowGrad.addColorStop(0, COL.rimGlow);
+    glowGrad.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R + 18, 0, Math.PI * 2);
+    ctx.fillStyle = glowGrad;
+    ctx.fill();
+
+    // --- Face gradient (deep navy, matches cover) ---
+    const faceGrad = ctx.createRadialGradient(cx, cy - 20, 10, cx, cy, R);
+    faceGrad.addColorStop(0,   '#131b30');
+    faceGrad.addColorStop(0.6, '#0c1020');
+    faceGrad.addColorStop(1,   '#080c18');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = faceGrad;
+    ctx.fill();
+
+    // --- Rim border ---
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = COL.rim;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // --- Inner subtle ring ---
+    ctx.beginPath();
+    ctx.arc(cx, cy, R - 12, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(201,151,90,0.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // --- Tick marks (perfectly centered using canvas transform) ---
+    for (let i = 0; i < 60; i++) {
+      const angle  = (i / 60) * Math.PI * 2 - Math.PI / 2;
+      const isMaj  = i % 5 === 0;
+      const tickLen = isMaj ? 12 : 5;
+      const tickW   = isMaj ? 2   : 1;
+      const inner   = R - 16 - tickLen;
+      const outer   = R - 16;
+
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+      ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
+      ctx.strokeStyle = isMaj ? COL.tickMajor : COL.tickMinor;
+      ctx.lineWidth   = tickW;
+      ctx.lineCap     = 'round';
+      ctx.stroke();
+    }
+
+    // --- Get current time ---
+    const now  = new Date();
+    const secs = now.getSeconds() + now.getMilliseconds() / 1000;
+    const mins = now.getMinutes() + secs / 60;
+    const hrs  = (now.getHours() % 12) + mins / 60;
+
+    const secAngle  = (secs / 60)  * Math.PI * 2 - Math.PI / 2;
+    const minAngle  = (mins / 60)  * Math.PI * 2 - Math.PI / 2;
+    const hourAngle = (hrs  / 12)  * Math.PI * 2 - Math.PI / 2;
+
+    // --- Hour hand ---
+    drawHand(hourAngle, R * 0.5, 3.5, COL.handHour, true);
+
+    // --- Minute hand ---
+    drawHand(minAngle, R * 0.68, 2.5, COL.handMin, true);
+
+    // --- Second hand (gold, with counterweight) ---
+    drawSecondHand(secAngle);
+
+    // --- Center dot ---
+    ctx.beginPath();
+    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = COL.center;
+    ctx.fill();
+
+    // --- Center glow ---
+    const dotGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 14);
+    dotGlow.addColorStop(0, 'rgba(201,151,90,0.4)');
+    dotGlow.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+    ctx.fillStyle = dotGlow;
+    ctx.fill();
+
+    // --- Update digital time ---
+    const liveTimeEl   = document.getElementById('liveTime');
+    const footerTimeEl = document.getElementById('footerTime');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
     const str = `${hh}:${mm}:${ss}`;
-
-    if (liveTimeEl)    liveTimeEl.textContent   = str;
-    if (footerTimeEl)  footerTimeEl.textContent  = str;
+    if (liveTimeEl)    liveTimeEl.textContent  = str;
+    if (footerTimeEl)  footerTimeEl.textContent = str;
   }
 
-  updateClock();
-  setInterval(updateClock, 1000);
+  function drawHand(angle, length, width, color, rounded) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(
+      cx + Math.cos(angle) * length,
+      cy + Math.sin(angle) * length
+    );
+    ctx.strokeStyle = color;
+    ctx.lineWidth   = width;
+    ctx.lineCap     = rounded ? 'round' : 'butt';
+
+    // subtle shadow for depth
+    ctx.shadowColor  = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur   = 6;
+    ctx.shadowOffsetX = 1;
+    ctx.shadowOffsetY = 1;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSecondHand(angle) {
+    ctx.save();
+
+    // glow effect
+    ctx.shadowColor = COL.glow;
+    ctx.shadowBlur  = 8;
+
+    // main second hand
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(
+      cx + Math.cos(angle) * (R * 0.75),
+      cy + Math.sin(angle) * (R * 0.75)
+    );
+    ctx.strokeStyle = COL.handSec;
+    ctx.lineWidth   = 1.5;
+    ctx.lineCap     = 'round';
+    ctx.stroke();
+
+    // counterweight
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(
+      cx + Math.cos(angle + Math.PI) * (R * 0.2),
+      cy + Math.sin(angle + Math.PI) * (R * 0.2)
+    );
+    ctx.strokeStyle = COL.handSec;
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // Animate at 60fps for smooth second hand
+  function tick() {
+    drawClock();
+    requestAnimationFrame(tick);
+  }
+  tick();
 })();
 
 
@@ -185,9 +344,7 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         navLinks.forEach(link => {
-          const active = link.getAttribute('href') === `#${entry.target.id}`;
-          link.style.color      = active ? 'rgba(255,255,255,0.95)' : '';
-          link.style.background = active ? 'rgba(255,255,255,0.1)'  : '';
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
         });
       }
     });
