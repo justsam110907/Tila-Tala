@@ -344,8 +344,9 @@ body::before {
 .hero-title-main {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 11vw, 9rem);
+  font-size: clamp(3.5rem, 9vw, 9rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 0.88;
+  white-space: nowrap;
   background: linear-gradient(160deg, #ffffff 0%, var(--gold-pale) 40%, var(--gold-light) 70%, #ffffff 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -355,7 +356,7 @@ body::before {
 .hero-desc {
   font-family: var(--font-serif);
   font-size: 1.05rem; color: rgba(255,255,255,0.6);
-  line-height: 1.9; margin-bottom: 3rem;
+  line-height: 1.65; margin-bottom: 3rem;
   max-width: 520px; font-style: italic;
   border-left: 2px solid rgba(201,151,90,0.4);
   padding-left: 1.25rem;
@@ -692,7 +693,7 @@ body::before {
   content: attr(data-num);
   font-family: var(--font-display);
   font-size: 5rem; font-weight: 900; line-height: 1;
-  color: rgba(201,151,90,0.07);
+  color: rgba(201,151,90,0.18);
   display: block; margin-bottom: -1.5rem;
 }
 
